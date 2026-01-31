@@ -62,4 +62,5 @@ end
 gem "tailwindcss-rails"
 gem "pg", ">= 1.4", "< 2.0"
 gem "fiddle", ">= 1.0.0"
+gem "supabase", "0.1.0"
 

@@ -322,6 +322,7 @@ GEM
       net-ssh (>= 2.8.0)
       ostruct
     stringio (3.2.0)
+    supabase (0.1.0)
     tailwindcss-rails (4.4.0)
       railties (>= 7.0.0)
       tailwindcss-ruby (~> 4.0)
@@ -379,6 +380,7 @@ DEPENDENCIES
   solid_cache
   solid_queue
   sqlite3 (>= 2.1)
+  supabase (= 0.1.0)
   tailwindcss-rails
   thruster
   tzinfo-data
@@ -497,6 +499,7 @@ CHECKSUMS
   sqlite3 (2.9.0-x86_64-linux-gnu) sha256=72fff9bd750070ba3af695511ba5f0e0a2d8a9206f84869640b3e99dfaf3d5a5
   sshkit (1.25.0) sha256=c8c6543cdb60f91f1d277306d585dd11b6a064cb44eab0972827e4311ff96744
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
+  supabase (0.1.0) sha256=5568f78ee24e2577b4a9d3216715add065c66ba597195c5c3100b880de0a8bed
   tailwindcss-rails (4.4.0) sha256=efa2961351a52acebe616e645a81a30bb4f27fde46cc06ce7688d1cd1131e916
   tailwindcss-ruby (4.1.18-x64-mingw-ucrt) sha256=a530a6e8a39f949f31dca35f7c05629bc2c3c2d404aca00cfc1eec14707bd32e
   tailwindcss-ruby (4.1.18-x86_64-linux-gnu) sha256=e0a2220163246fe0126c5c5bafb95bc6206e7d21fce2a2878fd9c9a359137534
