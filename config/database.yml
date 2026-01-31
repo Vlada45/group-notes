@@ -1,16 +1,11 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
 
 development:
   <<: *default
-  database: postgres
-  username: postgres
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: db.zwgalkariegpqlnjffyj.supabase.co
-  port: 5432
-  sslmode: require
+  database: group-notes-development
 
 test:
   <<: *default
