@@ -18,10 +18,20 @@ Rails.application.routes.draw do
 
   get "home", to: "home#index"
 
-  # get  "signup", to: "users#new"
-  # post "signup", to: "users#create"
-  #
-  get  "login",  to: "login#signIn"
-  # post "login",  to: "sessions#create"
-  # delete "logout", to: "sessions#destroy"
+  # Login
+  get  "login",  to: "login#new"
+  post "login",  to: "login#create"
+  delete "logout", to: "login#destroy"
+
+  # Sign up
+  get  "sign_up",  to: "sign_up#new"
+  post "sign_up",  to: "sign_up#create"
+
+  # Forgot password
+  get "forgot_password",  to: "forgot_password#new"
+  post "forgot_password", to: "forgot_password#recover"
+
+  # Logout
+  delete "logout", to: "login#destroy"
+
 end

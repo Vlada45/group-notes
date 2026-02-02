@@ -3,7 +3,7 @@
   <head>
     <title><%= content_for(:title) || "Group Notes" %></title>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%#= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag "application", type: "module", defer: true %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Group Notes">
@@ -12,11 +12,13 @@
     <%= csp_meta_tag %>
 
     <%= yield :head %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
   </head>
 
   <body>
 
+    <%= render "notification/toast" %>
     <%= render 'home/navbar' %>
 
     <%= yield %>

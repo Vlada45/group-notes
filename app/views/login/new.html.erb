@@ -1,0 +1,56 @@
+<div class="flex bg-gray-100 h-screen flex-row min-h-screen justify-center items-center">
+  <div class="flex min-h-1/2 flex-col justify-center px-6 py-12 lg:px-8 w-md max-w-lg lg:max-w-xl">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+        Přihlásit se
+      </h2>
+    </div>
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <%= form_with url: login_path, method: :post, class: "space-y-6", local: true do |f| %>
+
+        <div>
+          <%= f.label :email, "E-mail", class: "block text-sm/6 font-medium text-gray-900" %>
+          <div class="mt-2">
+            <%= f.email_field :email,
+                              required: true,
+                              autocomplete: "email",
+                              class: "block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            %>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between">
+            <%= f.label :password, "Heslo", class: "block text-sm/6 font-medium text-gray-900" %>
+            <div class="text-sm">
+              <%= link_to "Zapomněli jste heslo?", "/auth/v1/recover",
+                          class: "font-semibold text-indigo-600 hover:text-indigo-500" %>
+            </div>
+          </div>
+
+          <div class="mt-2">
+            <%= f.password_field :password,
+                                 required: true,
+                                 autocomplete: "current-password",
+                                 class: "block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.submit "Přihlásit se",
+                       class: "w-full flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm leading-6 font-semibold text-white shadow-md hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          %>
+        </div>
+
+      <% end %>
+
+      <p class="mt-10 text-center text-sm/6 text-gray-500">
+        <span>Nemáte účet?</span>
+        <%= link_to "Zaregistrujte se", sign_up_path,
+                    class: "font-semibold text-indigo-600 hover:text-indigo-500" %>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,8 +1,16 @@
 {
   "devDependencies": {
+    "esbuild": "^0.27.2",
     "tailwindcss": "^4.1.18"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.5",
+    "@preline/dropdown": "^4.0.0",
+    "@rails/ujs": "^7.1.3-4",
     "@tailwindplus/elements": "^1.0.22"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --external:@hotwired/turbo-rails",
+    "watch": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --watch --external:@hotwired/turbo-rails"
   }
 }
