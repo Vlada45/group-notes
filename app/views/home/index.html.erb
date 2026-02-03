@@ -1,3 +1,145 @@
-<div class="flex bg-gray-100 h-screen flex-row min-h-screen justify-center items-center">
-  <p class="font-bold text-5xl">HOME</p>
+<div class="flex h-screen min-h-screen bg-white overflow-hidden pt-16">
+
+  <!-- Sidebar -->
+  <aside class="hidden sm:flex w-20 flex-col items-center space-y-6 border-r border-gray-300 py-4 relative">
+
+    <!-- Toggle Button -->
+    <%= render "ui/components/add_button",
+               id: "toggleColorsDesktop",
+               hidden: false,
+               extra_classes: "hidden sm:flex mt-32" %>
+
+    <!-- Color Picker -->
+    <%= render "ui/components/color_pickers", id: "colorCirclesDesktop" %>
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex flex-1 flex-col space-y-10 px-10 py-8">
+
+    <!-- Header -->
+    <header class="flex h-16 items-center">
+      <%= text_field_tag :search, nil,
+                         placeholder: "Hledat",
+                         class: "w-full max-w-md rounded-lg bg-gray-100 px-4 py-2
+                    focus:outline-none focus:ring-2 focus:ring-gray-300" %>
+    </header>
+
+    <!-- Page Title -->
+    <section class="flex w-full justify-between items-end">
+
+      <h1 class="text-5xl font-semibold tracking-tight">
+        Notes
+      </h1>
+
+      <div class="flex flex-col items-center relative">
+
+        <!-- Toggle Button -->
+        <%= render "ui/components/add_button",
+                   id: "toggleColorsMobile",
+                   hidden: false,
+                   extra_classes: "flex sm:hidden" %>
+
+        <!-- Color Picker -->
+        <%= render "ui/components/color_pickers", id: "colorCirclesMobile" %>
+
+      </div>
+
+    </section>
+
+    <!-- Cards -->
+    <section class="grid grid-cols-1 gap-6
+         sm:grid-cols-2
+         md:grid-cols-3
+         lg:grid-cols-4
+         xl:grid-cols-5">
+
+      <%# later: @notes.each do |note| %>
+      <div class="relative w-80 rounded-2xl bg-[#FFA573] p-6">
+
+        <!-- Star Button -->
+        <button class="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-black">
+          <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.974a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.974c.3.922-.755 1.688-1.54 1.118l-3.38-2.455a1 1 0 00-1.176 0l-3.38 2.455c-.784.57-1.838-.196-1.539-1.118l1.287-3.974a1 1 0 00-.364-1.118L2.045 9.401c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.974z"/>
+          </svg>
+        </button>
+
+        <!-- Card Content -->
+        <h2 class="text-lg font-semibold leading-snug text-black">
+          13 Things You<br>
+          Should Give Up If<br>
+          You Want To Be a<br>
+          Successful UX Designer
+        </h2>
+
+        <p class="mt-8 text-sm text-black/70">
+          May 25, 2020
+        </p>
+
+        <!-- Edit Button -->
+        <button class="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-black">
+          <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.414 2.586a2 2 0 010 2.828l-9.9 9.9-4.243 1.414 1.414-4.243 9.9-9.9a2 2 0 012.829 0z"/>
+          </svg>
+        </button>
+
+      </div>
+      <%# end %>
+
+    </section>
+
+  </main>
+
 </div>
+
+<style>
+    .circle {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 9999px;
+        transform: scale(0.5);
+        opacity: 0;
+        transition: all 300ms ease;
+    }
+
+    .circle.show {
+        transform: scale(1);
+        opacity: 1;
+    }
+</style>
+
+
+<script>
+    const setups = [
+        { btnId: 'toggleColorsDesktop', containerId: 'colorCirclesDesktop' },
+        { btnId: 'toggleColorsMobile', containerId: 'colorCirclesMobile' }
+    ];
+
+    setups.forEach(({ btnId, containerId }) => {
+        const button = document.getElementById(btnId);
+        const container = document.getElementById(containerId);
+
+        if (!button || !container) return;
+
+        const icon = button.querySelector('.plus-icon');
+        const circles = container.querySelectorAll('.circle');
+        let open = false;
+
+        button.addEventListener('click', () => {
+            open = !open;
+
+            // rotate icon
+            icon.classList.toggle('rotate-45', open);
+
+            // toggle container
+            container.classList.toggle('opacity-0', !open);
+            container.classList.toggle('max-h-0', !open);
+
+            // stagger circles
+            circles.forEach((circle, index) => {
+                setTimeout(() => circle.classList.toggle('show', open), index * 80);
+            });
+        });
+    });
+
+</script>

@@ -1,0 +1,8 @@
+<div
+  id="<%= id %>"
+  class="mt-4 absolute top-45 space-y-3 overflow-hidden opacity-0 max-h-0 transition-all duration-500 ease-out"
+>
+  <% %w[yellow orange purple cyan].each do |color| %>
+    <div class="circle bg-<%= color %>-400"></div>
+  <% end %>
+</div>
