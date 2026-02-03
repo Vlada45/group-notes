@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   def current_user
     return unless session[:supabase_user_id]
 
-    # Optionally, you could fetch full user data from Supabase
+    # Fetch full user data from Supabase
     { id: session[:supabase_user_id], email: session[:supabase_user_email] }
   end
 

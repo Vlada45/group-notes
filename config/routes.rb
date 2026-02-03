@@ -16,6 +16,7 @@
 Rails.application.routes.draw do
   root "home#index"
 
+  # Home
   get "home", to: "home#index"
 
   # Login
@@ -29,7 +30,11 @@ Rails.application.routes.draw do
 
   # Forgot password
   get "forgot_password",  to: "forgot_password#new"
-  post "forgot_password", to: "forgot_password#recover"
+  post "forgot_password", to: "forgot_password#create"
+
+  # Password reset
+  get   "password/reset", to: "password_reset#edit"
+  patch "password/reset", to: "password_reset#update"
 
   # Logout
   delete "logout", to: "login#destroy"

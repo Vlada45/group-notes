@@ -1,6 +1,7 @@
 class ForgotPasswordController < ApplicationController
   require "net/http"
   require "json"
+  require "uri"
 
   # GET /forgot_password
   def new
@@ -9,20 +10,16 @@ class ForgotPasswordController < ApplicationController
 
   # POST /forgot_password
   def create
-    email = params[:email]
+    supabase_send_recover_email(params[:email])
 
-    response = supabase_send_recover_email(email)
-
-    if response["status"] == 200 || response["message"]&.include?("recovery email sent")
-      redirect_to root_path, notice: "Odkaz na reset hesla byl odeslán na váš e-mail"
-    else
-      flash.now[:alert] = response["error_description"] || "Nepodařilo se odeslat odkaz na reset hesla"
-      render :new, status: :unprocessable_entity
-    end
+    # Always show the same message (security best practice)
+    redirect_to login_path,
+                notice: "Pokud e-mail existuje, byl odeslán odkaz pro obnovu hesla."
   end
 
   private
 
+  # Send recovery email
   def supabase_send_recover_email(email)
     uri = URI("#{ENV['SUPABASE_URL']}/auth/v1/recover")
 
@@ -30,14 +27,15 @@ class ForgotPasswordController < ApplicationController
     req["Content-Type"] = "application/json"
     req["apikey"] = ENV["SUPABASE_ANON_KEY"]
 
-    req.body = { email: email }.to_json
+    req.body = {
+      email: email,
+      redirect_to: "http://localhost:3000/password/reset"
+    }.to_json
 
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
 
     res = http.request(req)
-    JSON.parse(res.body)
-  rescue JSON::ParserError
-    { "error_description" => "Chyba serveru" }
+    Rails.logger.info "Supabase recover: #{res.code}"
   end
 end
