@@ -1,8 +1,20 @@
+<% colors = {
+  yellow: "bg-yellow-400",
+  orange: "bg-orange-400",
+  purple: "bg-purple-400",
+  cyan:   "bg-cyan-400",
+  lime:   "bg-lime-300"
+} %>
+
 <div
   id="<%= id %>"
-  class="mt-4 absolute top-45 space-y-3 overflow-hidden opacity-0 max-h-0 transition-all duration-500 ease-out"
+  class="mt-4 flex flex-col space-y-5 overflow-hidden opacity-0 max-h-0 transition-all duration-500 ease-out"
 >
-  <% %w[yellow orange purple cyan].each do |color| %>
-    <div class="circle bg-<%= color %>-400"></div>
-  <% end %>
+  <% colors.each do |_, bg| %>
+    <button
+      class="circle rounded-full <%= bg %>"
+      data-color="<%= bg %>"
+    ></button>
+
+<% end %>
 </div>

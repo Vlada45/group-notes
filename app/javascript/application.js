@@ -1,3 +1,5 @@
+import "./note_colors"
+
 /** Toast Fade Animation **/
 document.addEventListener("DOMContentLoaded", () => {
     const toasts = document.querySelectorAll("#toast-container div[role='alert']");
