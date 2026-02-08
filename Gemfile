@@ -64,7 +64,4 @@ gem "pg", ">= 1.4", "< 2.0"
 gem "fiddle", ">= 1.0.0"
 gem "supabase", "0.1.0"
 gem 'dotenv-rails', groups: [:development, :test]
-
-
-
 gem "jsbundling-rails", "~> 1.3"

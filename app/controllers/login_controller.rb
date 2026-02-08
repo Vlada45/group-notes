@@ -21,19 +21,24 @@ class LoginController < ApplicationController
   def create
     response = supabase_sign_in(params[:email], params[:password])
 
-    if response["access_token"]
-      session[:supabase_access_token] = response["access_token"] # optional
-      session[:supabase_user_id] = response["user"]["id"]
-      session[:supabase_user_email] = response["user"]["email"]
+    if response && response["access_token"] && response["user"]
 
-      Rails.logger.debug "DOBRA response: #{response.inspect}"
+      session[:supabase_access_token] = response["access_token"]
+      session[:supabase_user_id]    = response["user"]["id"]
+      session[:supabase_user_email] = response["user"]["email"]
 
       redirect_to root_path, notice: "Přihlášení proběhlo úspěšně"
     else
-      flash.now[:alert] = response["error_description"] || "Nesprávné přihlašovací údaje"
+      error_message = response&.dig("error_description") || response&.dig("error", "message") || "Nesprávné přihlašovací údaje"
 
+      flash.now[:alert] = error_message
       render :new, status: :unprocessable_entity
     end
+
+  rescue StandardError => e
+    Rails.logger.error "Chyba při přihlášení: #{e.message}"
+    flash.now[:alert] = "Nepodařilo se přihlásit. Zkuste to prosím znovu."
+    render :new, status: :unprocessable_entity
   end
 
   def supabase_sign_in(email, password)

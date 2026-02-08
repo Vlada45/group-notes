@@ -1,4 +1,6 @@
 class PasswordResetController < ApplicationController
+  before_action :redirect_if_logged_in, only: [:edit, :update]
+
   require "net/http"
   require "json"
   require "uri"
@@ -10,6 +12,7 @@ class PasswordResetController < ApplicationController
     unless @access_token.present?
       redirect_to login_path, alert: "Neplatný nebo expirovaný odkaz"
     end
+
   end
 
   # PATCH /password/reset
@@ -45,10 +48,18 @@ class PasswordResetController < ApplicationController
 
     res = http.request(req)
 
-    Rails.logger.info "Supabase update password: #{res.code}"
-    JSON.parse(res.body)
-  rescue JSON::ParserError
-    { "error" => "invalid_response" }
+    Rails.logger.info "Supabase update password: #{res.code} | body: #{res.body}"
+
+    res_hash = JSON.parse(res.body) rescue { "error" => { "message" => "invalid_response" } }
+
+    if res_hash['error'].present? && !res_hash['error'].is_a?(Hash)
+      res_hash['error'] = { 'message' => res_hash['error'].to_s }
+    end
+
+    res_hash
+  rescue StandardError => e
+    Rails.logger.error "Error updating Supabase password: #{e.message}"
+    { "error" => { "message" => "internal_error" } }
   end
 
 end

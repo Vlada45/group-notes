@@ -1,56 +1,64 @@
 <div class="flex h-screen min-h-screen bg-white overflow-hidden pt-16">
 
-  <!-- Sidebar -->
-  <aside class="hidden sm:flex w-20 flex-col items-center space-y-6 border-r border-gray-300 py-4 relative">
+  <% if logged_in? %>
 
-    <!-- Toggle Button -->
-    <%= render "ui/components/add_button",
-               id: "toggleColorsDesktop",
-               hidden: false,
-               extra_classes: "hidden sm:flex mt-32" %>
+    <!-- Sidebar -->
+    <aside class="hidden sm:flex w-20 flex-col items-center space-y-6 border-r border-gray-300 py-4 relative">
 
-    <!-- Color Picker -->
-    <%= render "ui/components/color_pickers", id: "colorCirclesDesktop" %>
+      <!-- Toggle Button -->
+      <%= render "ui/components/add_button",
+                 id: "toggleColorsDesktop",
+                 hidden: false,
+                 extra_classes: "hidden sm:flex mt-32" %>
 
-  </aside>
+      <!-- Color Picker -->
+      <%= render "ui/components/color_pickers", id: "colorCirclesDesktop" %>
 
-  <!-- Main Content -->
-  <main class="flex flex-1 flex-col space-y-10 px-10 py-8 overflow-auto">
+    </aside>
 
-    <!-- Header -->
-    <header class="flex h-16 items-center">
-      <%= text_field_tag :search, nil,
-                         placeholder: "Hledat",
-                         class: "w-full max-w-md rounded-lg bg-gray-100 px-4 py-2
+    <!-- Main Content -->
+    <main class="flex flex-1 flex-col space-y-10 px-10 py-8 overflow-auto">
+
+      <!-- Header -->
+      <header class="flex h-16 items-center">
+        <%= text_field_tag :search, nil,
+                           placeholder: "Hledat",
+                           class: "w-full max-w-md rounded-lg bg-gray-100 px-4 py-2
                     focus:outline-none focus:ring-2 focus:ring-gray-300" %>
-    </header>
+      </header>
 
-    <!-- Page Title -->
-    <section class="flex w-full justify-between items-end">
+      <!-- Page Title -->
+      <section class="flex w-full justify-between items-end">
 
-      <h1 class="text-5xl font-semibold tracking-tight">
-        Notes
-      </h1>
+        <h1 class="text-5xl font-semibold tracking-tight">
+          Notes
+        </h1>
 
-      <div class="flex flex-col items-center relative">
+        <div class="flex flex-col items-center relative">
 
-        <!-- Toggle Button -->
-        <%= render "ui/components/add_button",
-                   id: "toggleColorsMobile",
-                   hidden: false,
-                   extra_classes: "flex sm:hidden" %>
+          <!-- Toggle Button -->
+          <%= render "ui/components/add_button",
+                     id: "toggleColorsMobile",
+                     hidden: false,
+                     extra_classes: "flex sm:hidden" %>
 
-      </div>
+        </div>
 
-    </section>
+      </section>
 
-    <!-- Cards -->
-    <section id="cards" class="grid gap-8 grid-cols-[repeat(auto-fit,minmax(19rem,1fr))]">
-      <template id="card-template">
-        <%= render "ui/components/card" %>
-      </template>
-    </section>
+      <!-- Cards -->
+      <section id="cards" class="grid gap-8 grid-cols-[repeat(auto-fit,minmax(19rem,1fr))]">
+        <template id="card-template">
+          <%= render "ui/components/card" %>
+        </template>
+      </section>
 
-  </main>
+    </main>
+
+  <% else %>
+
+  <div>Přihlaste se, a využívejte služby naplno!</div>
+
+  <% end %>
 
 </div>
