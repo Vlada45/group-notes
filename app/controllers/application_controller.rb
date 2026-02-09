@@ -25,4 +25,5 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, alert: "Jste již přihlášen"
     end
   end
+
 end

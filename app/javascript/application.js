@@ -1,4 +1,5 @@
 import "./note_colors"
+import "./note_card"
 
 /** Toast Fade Animation **/
 document.addEventListener("DOMContentLoaded", () => {

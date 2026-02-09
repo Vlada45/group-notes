@@ -40,9 +40,6 @@ Rails.application.routes.draw do
   delete "logout", to: "login#destroy"
 
   # Notes
-  # resources :notes do
-  #   # Custom member route for live color updates (inside resources block!)
-  #   patch :update_color, on: :member
-  # end
+  post "notes", to: "notes#create"
 
 end
