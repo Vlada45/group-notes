@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   delete "logout", to: "login#destroy"
 
   # Notes
+  # get "notes", to: "notes#index"
   post "notes", to: "notes#create"
 
 end
