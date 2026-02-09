@@ -4,7 +4,7 @@ class SignUpController < ApplicationController
 
   require "net/http"
   require "json"
-  require 'uri'
+  require "uri"
 
   def new
     # renders registration form
@@ -12,19 +12,42 @@ class SignUpController < ApplicationController
 
   def create
     response = supabase_sign_up(params[:email], params[:password], params[:name])
-
-    Rails.logger.debug "respone: #{response}"
+    Rails.logger.debug "response: #{response.inspect}"
 
     if response["access_token"]
-      session[:supabase_access_token] = response["access_token"] # optional
-      session[:supabase_user_id] = response["user"]["id"]
-      session[:supabase_user_email] = response["user"]["email"]
+      # Supabase signup successful
+      uid = response["user"]["id"]        # Supabase Auth ID
+      email   = response["user"]["email"]
+      username = params[:name]
 
-      redirect_to root_path, notice: "Registrace proběhla úspěšně"
+    elsif response["error_code"] == "user_already_exists"
+      Rails.logger.info "User already exists in Supabase Auth"
+
+      uid = nil
+      email = params[:email]
+      username = params[:name]
     else
-      flash.now[:alert] = response["error_description"] || "Nastala chyba při registraci"
-      render :new, status: :unprocessable_entity
+      flash.now[:alert] = response["error_description"] || response["msg"] || "Nastala chyba při registraci"
+      render :new, status: :unprocessable_entity and return
     end
+
+    # Insert into Rails users table if not already exists
+    user = User.find_by(email: email)
+    unless user
+      user = User.create!(
+        username: username,
+        email: email,
+        uid: uid
+      )
+    end
+
+    # Set session
+    session[:supabase_user_email] = user.email
+    session[:supabase_user_id]    = user.id      # Rails numeric ID
+    session[:supabase_uid]        = user.uid     # Supabase Auth ID
+    session[:supabase_access_token] = response["access_token"] # JWT for REST requests
+
+    redirect_to root_path, notice: "Registrace proběhla úspěšně"
   end
 
   private

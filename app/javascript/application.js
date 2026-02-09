@@ -1,5 +1,7 @@
 import "./note_colors"
 import "./note_card"
+// import { Turbo } from "@hotwired/turbo-rails";
+// import "./controllers"
 
 /** Toast Fade Animation **/
 document.addEventListener("DOMContentLoaded", () => {

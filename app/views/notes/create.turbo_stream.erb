@@ -1,0 +1,7 @@
+<%= turbo_stream.append "notes" do %>
+  <%= render partial: "notes/note", locals: { note: @note } %>
+<% end %>
+
+<%= turbo_stream.replace "new_note_form" do %>
+  <%= render partial: "notes/form" %>
+<% end %>

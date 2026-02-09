@@ -1,25 +1,54 @@
-# app/controllers/notes_controller.rb
 class NotesController < ApplicationController
-  before_action :logged_in? # use your Rails login
+  require "net/http"
+  require "json"
+  require "uri"
 
   def create
     heading = params[:heading]
     description = params[:description]
 
-    if heading.blank?
-      return render json: { success: false, error: "Název poznámky je povinný" }, status: :unprocessable_entity
+    # Find Rails user by Supabase UID stored in session
+    user = User.find_by(uid: session[:supabase_uid])
+
+    unless user
+      flash[:alert] = "Uživatel nebyl nalezen v naší databázi"
+      redirect_to root_path and return
     end
 
-    # Insert into Supabase using service role key (server-side)
-    supabase = Supabase::Client.new(ENV['SUPABASE_URL'], ENV['SUPABASE_SERVICE_KEY'])
-    result = supabase.from('notes').insert([{ owner_id: current_user.id, heading: heading, description: description }])
+    # Ensure the Supabase access token exists
+    jwt = session[:supabase_access_token]
+    unless jwt.present?
+      flash[:alert] = "Uživatel není přihlášen v Supabase"
+      redirect_to root_path and return
+    end
 
-    if result['error'].present?
-      render json: { success: false, error: result['error']['message'] }, status: :unprocessable_entity
+    Rails.logger.info "Adding note for UID: #{user.uid} | Heading: #{heading} | Description: #{description}"
+
+    # Prepare the REST request to Supabase
+    uri = URI("#{ENV['SUPABASE_URL']}/rest/v1/notes")
+    req = Net::HTTP::Post.new(uri)
+    req["Content-Type"] = "application/json"
+    req["apikey"] = ENV["SUPABASE_ANON_KEY"]
+    req["Authorization"] = "Bearer #{jwt}"
+
+    now = Time.now.utc.iso8601
+
+    # Send the correct user_id (Supabase UID)
+    req.body = { user_id: session[:supabase_user_id], heading: heading, description: description, created_at: now,
+                 updated_at: now, starred: false }.to_json
+
+    res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.request(req) }
+
+    Rails.logger.info "Supabase response: #{res.code} | #{res.body}"
+
+    res_hash = JSON.parse(res.body.presence || "{}")
+
+    if res_hash["error"].present?
+      flash[:alert] = "Nepodařilo se přidat poznámku: #{res_hash['error']}"
     else
-      render json: { success: true, data: result['data'] }
+      flash[:notice] = "Poznámka byla úspěšně přidána!"
     end
-  rescue => e
-    render json: { success: false, error: e.message }, status: :internal_server_error
+
+    redirect_to root_path
   end
 end

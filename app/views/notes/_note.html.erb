@@ -1,0 +1,11 @@
+<div class="note-card min-h-50 relative w-80 rounded-2xl p-6" id="note_<%= note.id %>">
+  <h3 class="text-lg font-semibold"><%= note.heading %></h3>
+
+  <% if note.description.present? %>
+    <p class="text-sm text-gray-700 mt-2"><%= note.description %></p>
+  <% end %>
+
+  <p class="absolute bottom-6 text-sm text-black/70">
+    Naposledy upraveno: <%= I18n.l(note.updated_at, format: "%-d. %-m. %Y") %>
+  </p>
+</div>

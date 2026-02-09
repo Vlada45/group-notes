@@ -1,9 +1,8 @@
 <div class="note-card min-h-50 relative w-80 rounded-2xl p-6">
-
   <%= form_with url: notes_path,
                 method: :post,
                 id: "new_note_form",
-                data: { turbo: true } do %>
+                data: { turbo: true } do |f| %>
 
     <!-- Star Button -->
     <button class="hidden absolute top-4 right-4 h-10 w-10 items-center justify-center rounded-full bg-black">
@@ -13,25 +12,16 @@
     </button>
 
     <label class="space-y-4">
+      <%= f.text_field :heading,
+                       id: "card_head",
+                       placeholder: "Nová poznámka",
+                       class: "block w-full text-lg font-semibold text-black border-none outline-hidden",
+                       required: true %>
 
-      <!-- Heading -->
-      <input
-          id="card_head"
-          name="heading"
-          type="text"
-          placeholder="Nová poznámka"
-          class="block w-full text-lg font-semibold text-black border-none outline-hidden"
-          required
-          />
-
-      <!-- Description -->
-      <input
-          id="card_des"
-          name="description"
-          type="text"
-          placeholder="Zapište si poznámku k tomuto záznamu"
-          class="block w-full text-sm font-semibold text-gray-700 border-none outline-hidden"
-          />
+      <%= f.text_field :description,
+                       id: "card_des",
+                       placeholder: "Zapište si poznámku k tomuto záznamu",
+                       class: "block w-full text-sm font-semibold text-gray-700 border-none outline-hidden" %>
     </label>
 
     <p class="absolute bottom-6 text-sm text-black/70">
@@ -40,14 +30,13 @@
 
     <!-- Submit Button -->
     <button
-        type="submit"
-        id="submitBtn"
-        class="hidden absolute bottom-4 right-4 h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-black">
+      type="submit"
+      id="submitBtn"
+      class="hidden absolute bottom-4 right-4 h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-black">
       <svg class="h-5 w-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/>
       </svg>
     </button>
 
   <% end %>
-
 </div>

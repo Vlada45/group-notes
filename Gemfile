@@ -65,3 +65,5 @@ gem "fiddle", ">= 1.0.0"
 gem "supabase", "0.1.0"
 gem 'dotenv-rails', groups: [:development, :test]
 gem "jsbundling-rails", "~> 1.3"
+gem "turbo-rails"
+gem "stimulus-rails"
