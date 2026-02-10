@@ -1,4 +1,5 @@
 class NotesController < ApplicationController
+
   require "net/http"
   require "json"
   require "uri"
@@ -18,6 +19,7 @@ class NotesController < ApplicationController
   #   Rails.logger.info "Notes loaded: #{@notes.inspect}"
   # end
 
+  # POST /notes
   def create
     heading = params[:heading]
     description = params[:description]
@@ -67,4 +69,28 @@ class NotesController < ApplicationController
 
     redirect_to root_path
   end
+
+  # PATCH /notes
+  def update
+    @note = Note.find(params[:note][:id])
+
+    if @note.update(note_params)
+      respond_to do |format|
+        format.turbo_stream # renders update.turbo_stream.erb
+        format.html { redirect_to root_path } # fallback for non-Turbo requests
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("note_#{@note.id}", partial: "notes/note", locals: { note: @note }) }
+        format.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  private
+
+  def note_params
+    params.require(:note).permit(:id, :heading, :description, :color)
+  end
+
 end

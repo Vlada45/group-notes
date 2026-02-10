@@ -42,5 +42,6 @@ Rails.application.routes.draw do
   # Notes
   # get "notes", to: "notes#index"
   post "notes", to: "notes#create"
+  patch "notes",  to: "notes#update", as: :note
 
 end

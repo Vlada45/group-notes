@@ -43,13 +43,13 @@ class ApplicationController < ActionController::Base
       if Time.at(exp) < Time.now
 
         reset_session
-        redirect_to root_path, alert: "Your session expired. Please log in again."
+        redirect_to root_path, alert: "Vaše relace vypršela. Prosím, přihlaste se znovu."
       end
 
     rescue JWT::DecodeError
 
       reset_session
-      redirect_to root_path, alert: "Invalid session. Please log in again."
+      redirect_to root_path, alert: "Neplatná relace. Prosím, přihlaste se znovu."
     end
   end
 

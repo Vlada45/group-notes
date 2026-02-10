@@ -1,12 +1,44 @@
-<div class="note-card min-h-50 relative w-80 rounded-2xl p-6 <%= note.color %>" id="note_<%= note.id %>">
+<div class="note-card min-h-50 relative w-80 rounded-2xl p-6 cursor-pointer <%= note.color %> transform transition-transform duration-200 hover:-translate-y-2" data-id="<%= note.id %>" id="note_<%= note.id %>">
 
-  <h3 class="text-lg font-semibold"><%= note.heading %></h3>
+  <%= form_with url: notes_path, method: :patch, local: false, scope: :note, data: { turbo_frame: "note_#{note.id}" } do |f| %>
 
-  <% if note.description.present? %>
-    <p class="text-sm text-gray-700 mt-2"><%= note.description %></p>
+    <%= f.hidden_field :id, value: note.id %>
+
+    <!-- Heading field prefilled with current note heading -->
+    <%= f.text_field :heading,
+                     id: "note_head_#{note.id}",
+                     value: note.heading,
+                     readonly: "true",
+                     class: "text-lg font-semibold w-full border p-1 rounded border-none outline-hidden resize-none",
+                     placeholder: "Heading" %>
+
+    <!-- Description field prefilled with current note description -->
+    <%= f.text_area :description,
+                    id: "note_des_#{note.id}",
+                    value: note.description,
+                    readonly: "true",
+                    class: "text-sm text-gray-700 mt-2 w-full border p-1 rounded border-none outline-hidden resize-none",
+                    placeholder: "Description" %>
+
+    <!-- Last updated info (read-only, outside the form inputs) -->
+    <p class="absolute bottom-6 text-sm text-black/70">
+      Naposledy upraveno: <%= l(note.updated_at, format: "%-d. %-m. %Y") %>
+    </p>
+
+    <button
+      type="submit"
+      class="absolute hidden submit-btn bottom-4 right-4 h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-black">
+      <svg class="h-5 w-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/>
+      </svg>
+    </button>
+
   <% end %>
 
-  <p class="absolute bottom-6 text-sm text-black/70">
-    Naposledy upraveno: <%= l(note.updated_at, format: "%-d. %-m. %Y") %>
-  </p>
+  <button class="absolute hidden edit-btn bottom-4 right-4 h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-black">
+    <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M17.414 2.586a2 2 0 010 2.828l-9.9 9.9-4.243 1.414 1.414-4.243 9.9-9.9a2 2 0 012.829 0z"/>
+    </svg>
+  </button>
+
 </div>
