@@ -64,7 +64,7 @@ document.getElementById('colorCirclesDesktop').addEventListener('click', e => {
     document.getElementById("note_color").value = color;
 
     // update preview
-    document.getElementById("note_preview").style.backgroundColor = color;
+    // document.getElementById("note-card").style.backgroundColor = color;
 });
 
 /** Mobile View - WITHOUT SELECTION **/

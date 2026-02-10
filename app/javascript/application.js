@@ -1,7 +1,16 @@
 import "./note_colors"
 import "./note_card"
-// import { Turbo } from "@hotwired/turbo-rails";
-// import "./controllers"
+// import { Turbo } from "@hotwired/turbo-rails"
+import { Application } from "@hotwired/stimulus"
+import {controllers} from "./controllers";
+
+const application = Application.start()
+
+Object.entries(controllers).forEach(([name, controller]) => {
+    application.register(name, controller)
+})
+
+console.log("🌟 Stimulus application started")
 
 /** Toast Fade Animation **/
 document.addEventListener("DOMContentLoaded", () => {

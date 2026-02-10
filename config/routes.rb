@@ -42,6 +42,9 @@ Rails.application.routes.draw do
   # Notes
   # get "notes", to: "notes#index"
   post "notes", to: "notes#create"
-  patch "notes",  to: "notes#update", as: :note
+  patch "notes/:id", to: "notes#update", as: :update_note
+  delete "notes/:id", to: "notes#destroy", as: :destroy_note
+
+  resources :notes, only: [ :update, :destroy]
 
 end

@@ -1,23 +1,10 @@
 class NotesController < ApplicationController
 
+  before_action :set_note, only: [:update, :destroy]
+
   require "net/http"
   require "json"
   require "uri"
-
-  # def index
-  #   Rails.logger.info "Session data: #{session.inspect}"
-  #
-  #   # Supabase UID from session
-  #   user_uid = current_user[:id]
-  #   Rails.logger.info "Looking up user with UID: #{current_user[:id]}"
-  #
-  #   # Rails user by uid column
-  #   user = User.find_by(uid: user_uid)
-  #   Rails.logger.info "Found user: #{user.inspect}"
-  #
-  #   @notes = user ? Note.where(user_id: user.id).order(created_at: :desc) : Note.none
-  #   Rails.logger.info "Notes loaded: #{@notes.inspect}"
-  # end
 
   # POST /notes
   def create
@@ -70,27 +57,36 @@ class NotesController < ApplicationController
     redirect_to root_path
   end
 
-  # PATCH /notes
+  # PATCH /notes/:id
   def update
-    @note = Note.find(params[:note][:id])
-
     if @note.update(note_params)
       respond_to do |format|
-        format.turbo_stream # renders update.turbo_stream.erb
-        format.html { redirect_to root_path } # fallback for non-Turbo requests
+        format.turbo_stream
+        format.html { redirect_to root_path, notice: "Poznámka byla aktualizována" }
       end
     else
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("note_#{@note.id}", partial: "notes/note", locals: { note: @note }) }
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+      head :unprocessable_entity
+    end
+  end
+
+
+  # DELETE /notes/:id
+  def destroy
+    @note.destroy
+    respond_to do |format|
+      format.turbo_stream  # destroy.turbo_stream.erb
+      format.html { redirect_to root_path, notice: "Poznámka smazána" }
     end
   end
 
   private
 
+  def set_note
+    @note = Note.find(params[:id])
+  end
+
   def note_params
-    params.require(:note).permit(:id, :heading, :description, :color)
+    params.require(:note).permit(:heading, :description, :color)
   end
 
 end

@@ -1,10 +1,8 @@
-<div class="note-card min-h-50 relative w-80 rounded-2xl p-6 cursor-pointer <%= note.color %> transform transition-transform duration-200 hover:-translate-y-2" data-id="<%= note.id %>" id="note_<%= note.id %>">
+<div class="note-card group min-h-50 relative w-80 rounded-2xl p-6 cursor-pointer <%= note.color %> transform transition-transform duration-200 hover:-translate-y-2" data-id="<%= note.id %>" id="note_<%= note.id %>">
 
-  <%= form_with url: notes_path, method: :patch, local: false, scope: :note, data: { turbo_frame: "note_#{note.id}" } do |f| %>
+  <%= form_with model: note, method: :patch, local: false, data: { turbo_frame: "note_#{note.id}" } do |f| %>
 
-    <%= f.hidden_field :id, value: note.id %>
-
-    <!-- Heading field prefilled with current note heading -->
+    <!-- Current note HEADING -->
     <%= f.text_field :heading,
                      id: "note_head_#{note.id}",
                      value: note.heading,
@@ -12,7 +10,7 @@
                      class: "text-lg font-semibold w-full border p-1 rounded border-none outline-hidden resize-none",
                      placeholder: "Heading" %>
 
-    <!-- Description field prefilled with current note description -->
+    <!-- Current note DESCRIPTION -->
     <%= f.text_area :description,
                     id: "note_des_#{note.id}",
                     value: note.description,
@@ -20,7 +18,7 @@
                     class: "text-sm text-gray-700 mt-2 w-full border p-1 rounded border-none outline-hidden resize-none",
                     placeholder: "Description" %>
 
-    <!-- Last updated info (read-only, outside the form inputs) -->
+    <!-- Last Update -->
     <p class="absolute bottom-6 text-sm text-black/70">
       Naposledy upraveno: <%= l(note.updated_at, format: "%-d. %-m. %Y") %>
     </p>
@@ -40,5 +38,15 @@
       <path d="M17.414 2.586a2 2 0 010 2.828l-9.9 9.9-4.243 1.414 1.414-4.243 9.9-9.9a2 2 0 012.829 0z"/>
     </svg>
   </button>
+
+  <%= button_to destroy_note_path(note),
+                method: :delete,
+                data: { controller: "delete", action: "click->delete#confirm", turbo_stream: true },
+                class: "absolute hidden group-hover:flex del-btn top-4 right-4 h-10 w-10 items-center justify-center rounded-full cursor-pointer bg-red-500" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-trash h-5 w-5 text-gray-200" viewBox="0 0 16 16">
+      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+    </svg>
+  <% end %>
 
 </div>
