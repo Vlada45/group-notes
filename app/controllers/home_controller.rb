@@ -14,6 +14,11 @@ class HomeController < ApplicationController
 
       @notes = user ? Note.where(user_id: user.id).order(created_at: :desc) : Note.none
       Rails.logger.info "Notes loaded: #{@notes.inspect}"
+
+      # Only headings that start with the search string
+      if params[:search].present?
+        @notes = @notes.where("heading ILIKE ?", "#{params[:search]}%")
+      end
     end
   end
 end
