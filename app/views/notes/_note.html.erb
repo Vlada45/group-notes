@@ -1,4 +1,5 @@
-<div class="note-card min-h-50 relative w-80 rounded-2xl p-6" id="note_<%= note.id %>">
+<div class="note-card min-h-50 relative w-80 rounded-2xl p-6 <%= note.color %>" id="note_<%= note.id %>">
+
   <h3 class="text-lg font-semibold"><%= note.heading %></h3>
 
   <% if note.description.present? %>

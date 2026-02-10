@@ -2,8 +2,6 @@
 import {createClient} from "@supabase/supabase-js";
 import {showToast} from "./toast";
 
-console.log("Hello from note_card.js");
-
 document.addEventListener('input', (e) => {
     if (e.target.id === 'card_head') {
         const submitBtn = document.getElementById('submitBtn');

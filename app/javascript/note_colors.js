@@ -57,6 +57,14 @@ document.getElementById('colorCirclesDesktop').addEventListener('click', e => {
         card.classList.add(colorClass);
     }
     cardsContainer.appendChild(clone);
+
+    const color = circle.dataset.color;
+
+    // save for Rails
+    document.getElementById("note_color").value = color;
+
+    // update preview
+    document.getElementById("note_preview").style.backgroundColor = color;
 });
 
 /** Mobile View - WITHOUT SELECTION **/

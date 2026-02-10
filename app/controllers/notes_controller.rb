@@ -21,6 +21,7 @@ class NotesController < ApplicationController
   def create
     heading = params[:heading]
     description = params[:description]
+    color = params[:color]
 
     # Find Rails user by Supabase UID stored in session
     user = User.find_by(uid: current_user[:id]) || User.find_by(uid: session[:supabase_uid])
@@ -50,7 +51,7 @@ class NotesController < ApplicationController
 
     # Send the correct user_id (Supabase UID)
     req.body = { user_id: user.id, heading: heading, description: description, created_at: now,
-                 updated_at: now, starred: false, color: "yellow" }.to_json
+                 updated_at: now, starred: false, color: color }.to_json
 
     res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.request(req) }
 

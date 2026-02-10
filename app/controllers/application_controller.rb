@@ -1,4 +1,8 @@
 class ApplicationController < ActionController::Base
+  require 'jwt'
+
+  before_action :check_supabase_jwt
+
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
@@ -23,6 +27,29 @@ class ApplicationController < ActionController::Base
   def redirect_if_logged_in
     if logged_in?
       redirect_to root_path, alert: "Jste již přihlášen"
+    end
+  end
+
+  # Checks current user JWT token
+  def check_supabase_jwt
+    jwt = session[:supabase_access_token]
+
+    return unless jwt.present?
+
+    begin
+      payload, _header = JWT.decode(jwt, nil, false)
+
+      exp = payload["exp"]
+      if Time.at(exp) < Time.now
+
+        reset_session
+        redirect_to root_path, alert: "Your session expired. Please log in again."
+      end
+
+    rescue JWT::DecodeError
+
+      reset_session
+      redirect_to root_path, alert: "Invalid session. Please log in again."
     end
   end
 

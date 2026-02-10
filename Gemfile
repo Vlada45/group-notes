@@ -67,3 +67,5 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem "jsbundling-rails", "~> 1.3"
 gem "turbo-rails"
 gem "stimulus-rails"
+gem 'jwt', '~> 2.7'
+
