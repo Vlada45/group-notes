@@ -1,6 +1,6 @@
 # Group Notes
 
-Jedná se o webovou aplikaci, která umožňuje uživatelům vytvářet vlastní poznámky. Každá poznámka obsahuje nadpis, popis a zvolenou barvu. Uživatel může své poznámky upravovat nebo je zcela odstranit. Aplikace nabízí možnost registrace a přihlášení, které uživatelům zpřístupňují funkce pro vytváření a správu jejich poznámek.
+Jedná se o responzivní webovou aplikaci, která umožňuje uživatelům vytvářet vlastní poznámky. Každá poznámka obsahuje nadpis, popis a zvolenou barvu. Uživatel může své poznámky upravovat nebo je zcela odstranit. Aplikace nabízí možnost registrace a přihlášení, které uživatelům zpřístupňují funkce pro vytváření a správu jejich poznámek.
 
 Původním záměrem aplikace bylo sdílení krátkých denních zápisků mezi blízkými lidmi s cílem usnadnit každodenní organizaci úkolů prostřednictvím To-Do listu. V aktuální demo verzi (viz obrázek níže) však mohou uživatelé vytvářet poznámky pouze pro vlastní potřebu. Funkce sdílení poznámek a další rozvoj aplikace jsou momentálně ve fázi vývoje.
 
