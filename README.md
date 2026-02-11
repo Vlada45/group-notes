@@ -4,6 +4,13 @@ Jedná se o responzivní webovou aplikaci, která umožňuje uživatelům vytvá
 
 Původním záměrem aplikace bylo sdílení krátkých denních zápisků mezi blízkými lidmi s cílem usnadnit každodenní organizaci úkolů prostřednictvím To-Do listu. V aktuální demo verzi (viz obrázek níže) však mohou uživatelé vytvářet poznámky pouze pro vlastní potřebu. Funkce sdílení poznámek a další rozvoj aplikace jsou momentálně ve fázi vývoje.
 
+## Použité technologie
+
+- **Full-stack framework:** Ruby on Rails  
+- **Databáze:** Supabase (využívá PostgreSQL)  
+- **Dynamické UI:** Hotwire  
+- **Styling:** Tailwind CSS
+
 <img width="992" height="386" alt="image" src="https://github.com/user-attachments/assets/4e6bdcd2-90d2-4194-9e40-cc7abe849587" />
 
 # Návod na spuštění aplikace
