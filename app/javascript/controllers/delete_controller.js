@@ -6,7 +6,7 @@ export default class extends Controller {
     static values = { message: String }
 
     connect() {
-        console.log("🗑 DeleteController loaded")
+        // console.log("🗑 DeleteController pripojen")
     }
 
     confirm(event) {

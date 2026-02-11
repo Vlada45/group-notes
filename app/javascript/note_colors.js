@@ -34,38 +34,44 @@ setups.forEach(({btnId, containerId}) => {
 // Note Cards
 const cardsContainer = document.getElementById('cards');
 
+const colorCircles = document.getElementById('colorCirclesDesktop');
+
 // View Template
-const template = document.getElementById('card-template').content;
+const template = document?.getElementById('card-template')?.content;
 
-/** Desktop View - WITH SELECTION **/
-document.getElementById('colorCirclesDesktop').addEventListener('click', e => {
-    const circle = e.target.closest('.circle');
-    if (!circle) return;
+if (colorCircles) {
 
-    const colorClass = circle.dataset.color;
-    // console.log("COLOR CLASS:", colorClass);
+    /** Desktop View - WITH SELECTION **/
+    colorCircles.addEventListener('click', e => {
 
-    const clone = document.importNode(template, true);
-    const card = clone.querySelector('.note-card');
+        const circle = e.target.closest('.circle');
+        if (!circle) return;
 
-    if (card) {
-        card.classList.forEach(cls => {
-            if (cls.startsWith("bg-")) card.classList.remove(cls);
-        });
+        const colorClass = circle.dataset.color;
+        // console.log("COLOR CLASS:", colorClass);
 
-        // Add the new class
-        card.classList.add(colorClass);
-    }
-    cardsContainer.appendChild(clone);
+        const clone = document.importNode(template, true);
+        const card = clone.querySelector('.note-card');
 
-    const color = circle.dataset.color;
+        if (card) {
+            card.classList.forEach(cls => {
+                if (cls.startsWith("bg-")) card.classList.remove(cls);
+            });
 
-    // save for Rails
-    document.getElementById("note_color").value = color;
+            // Add the new class
+            card.classList.add(colorClass);
+        }
+        cardsContainer.appendChild(clone);
 
-    // update preview
-    // document.getElementById("note-card").style.backgroundColor = color;
-});
+        const color = circle.dataset.color;
+
+        // save for Rails
+        document.getElementById("note_color").value = color;
+
+        // update preview
+        // document.getElementById("note-card").style.backgroundColor = color;
+    });
+}
 
 /** Mobile View - WITHOUT SELECTION **/
 document.addEventListener("DOMContentLoaded", () => {

@@ -6,11 +6,13 @@ import {controllers} from "./controllers";
 
 const application = Application.start()
 
+window.SUPABASE_URL = "<%= ENV['SUPABASE_URL'] %>";
+window.SUPABASE_ANON_KEY = "<%= ENV['SUPABASE_ANON_KEY'] %>";
+
+// Loading controllers
 Object.entries(controllers).forEach(([name, controller]) => {
     application.register(name, controller)
 })
-
-console.log("🌟 Stimulus application started")
 
 /** Toast Fade Animation **/
 document.addEventListener("DOMContentLoaded", () => {
@@ -19,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             toast.classList.remove("opacity-100");
             toast.classList.add("opacity-0");
-            setTimeout(() => toast.remove(), 500); // fade out then remove
+            setTimeout(() => toast.remove(), 500);
         }, 3000);
 
         const closeBtn = toast.querySelector("button[aria-label='Close']");
