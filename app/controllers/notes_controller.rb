@@ -81,10 +81,12 @@ class NotesController < ApplicationController
 
   private
 
+  # Finds a note by ID and assigns it to @note
   def set_note
     @note = Note.find(params[:id])
   end
 
+  # Parameters for updating a note
   def note_params
     params.require(:note).permit(:heading, :description, :color)
   end

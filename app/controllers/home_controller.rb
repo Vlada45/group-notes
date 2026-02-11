@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
 
+  # GET /
   def index
     return unless logged_in?
     Rails.logger.info "Session data: #{session.inspect}"
@@ -25,6 +26,7 @@ class HomeController < ApplicationController
 
   private
 
+  # Sort Notes by selection
   def sort_notes(notes, sort_param)
     Rails.logger.debug "Final SQL: #{@notes.to_sql}"
     Rails.logger.debug "Sort param: #{sort_param}"
