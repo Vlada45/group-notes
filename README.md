@@ -2,6 +2,8 @@
 
 Jedná se o webovou aplikaci, ve které si uživatel může vytvářet své poznámky. Každá poznámka se skládá z nadpisu, popisu a zvolené barvy. Uživatel může obsah svých poznámek upravovat nebo celou poznámku smazat. Aplikace také poskytuje uživatelům možnost registrace a přihlášení, což jim zpřístupňuje funkce pro správu a vytvoření svých poznámek. Původním záměrem aplikace bylo sdílení krátkých denních zápisků mezi blízkými lidmi, aby se usnadnila každodenní práce s To-Do listem. Autor na jejím dalším rozvoji stále pracuje.
 
+<img width="992" height="386" alt="image" src="https://github.com/user-attachments/assets/4e6bdcd2-90d2-4194-9e40-cc7abe849587" />
+
 # Návod na spuštění aplikace
 
 1. **Zkontrolujte verzi Rails v příkazovém řádku, pokud jste tak ještě neučinili:**
