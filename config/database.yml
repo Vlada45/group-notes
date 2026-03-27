@@ -6,11 +6,14 @@ default: &default
 development:
   <<: *default
   database: group-notes-development
+  url: <%= ENV["DATABASE_URL"] %>
 
 test:
   <<: *default
   database: group-notes-test
+  url: <%= ENV["DATABASE_URL"] %>
 
 production:
   <<: *default
   database: group-notes-production
+  url: <%= ENV["DATABASE_URL"] %>
